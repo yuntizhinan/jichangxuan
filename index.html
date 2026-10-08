@@ -1,0 +1,1409 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="机场选：独立、透明的机场评测与对比博客，提供机场推荐、性价比榜单、优惠码、跑路预警与新手知识库。">
+  <meta name="theme-color" content="#07110d">
+  <title>机场选｜帮你选对机场，少花冤枉钱</title>
+  <style>
+    :root {
+      --ink: #14231d;
+      --muted: #66766f;
+      --paper: #f5f8f4;
+      --white: #ffffff;
+      --line: #dfe8e2;
+      --green: #177a50;
+      --green-dark: #0d5738;
+      --green-pale: #e2f3e9;
+      --lime: #b8f34a;
+      --orange: #ff8b52;
+      --red: #d84848;
+      --shadow: 0 22px 60px rgba(15, 51, 35, .10);
+      --radius: 22px;
+      --container: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 5% 0%, rgba(184, 243, 74, .13), transparent 24rem),
+        var(--paper);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; }
+    img, svg { display: block; }
+    .container { width: min(calc(100% - 40px), var(--container)); margin-inline: auto; }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(245, 248, 244, .96);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(210, 223, 215, .78);
+    }
+    .header-container { width: min(calc(100% - 120px), 1486px); margin-inline: auto; }
+    .nav-wrap { min-height: 94px; display: flex; align-items: center; gap: 20px; }
+    .brand { display: inline-flex; align-items: center; gap: 13px; flex: 0 0 auto; }
+    .brand-mark {
+      position: relative;
+      width: 47px;
+      height: 47px;
+      border-radius: 15px;
+      background: var(--ink);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.06);
+    }
+    .brand-mark::before,
+    .brand-mark::after {
+      content: "";
+      position: absolute;
+      left: 11px;
+      width: 25px;
+      height: 8px;
+      border-radius: 99px;
+      transform: rotate(-18deg);
+    }
+    .brand-mark::before { top: 12px; background: var(--lime); }
+    .brand-mark::after { top: 27px; left: 17px; width: 17px; background: #fff; }
+    .brand-name { font-size: 25px; font-weight: 950; letter-spacing: -.045em; }
+    .brand-name em { font-style: normal; color: var(--green); }
+
+    .main-nav { margin-left: auto; display: flex; align-items: center; gap: 1px; }
+    .main-nav a {
+      position: relative;
+      padding: 14px 13px;
+      border-radius: 13px;
+      color: #3f5048;
+      font-size: 16px;
+      font-weight: 800;
+      white-space: nowrap;
+      transition: color .2s ease, background .2s ease;
+    }
+    .main-nav a:hover,
+    .main-nav a.active { color: var(--green-dark); background: #e8efea; }
+    .main-nav a.active::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: 2px;
+      width: 16px;
+      height: 3px;
+      border-radius: 3px;
+      background: var(--green);
+      transform: translateX(-50%);
+    }
+    .header-cta {
+      flex: 0 0 auto;
+      margin-left: 18px;
+      padding: 14px 22px;
+      border-radius: 16px;
+      color: #fff;
+      background: var(--green);
+      font-size: 16px;
+      font-weight: 900;
+      box-shadow: 0 12px 28px rgba(23,122,80,.22);
+    }
+    .header-cta:hover { background: var(--green-dark); }
+    .header-menu { display: none; margin-left: auto; padding: 8px; border: 0; background: transparent; cursor: pointer; }
+    .header-menu span { display: block; width: 23px; height: 2px; margin: 5px; border-radius: 2px; background: var(--ink); }
+
+    @media (max-width: 1260px) {
+      .header-container { width: min(calc(100% - 40px), 1180px); }
+      .main-nav { position: fixed; inset: 104px 20px auto; display: none; padding: 12px; border: 1px solid var(--line); border-radius: 17px; background: #fff; box-shadow: var(--shadow); }
+      .main-nav.open { display: grid; grid-template-columns: repeat(3, 1fr); }
+      .main-nav a { padding: 12px; font-size: 14px; }
+      .header-cta { display: none; }
+      .header-menu { display: block; }
+    }
+    @media (max-width: 560px) {
+      .header-container { width: calc(100% - 28px); }
+      .nav-wrap { min-height: 68px; }
+      .brand-mark { width: 38px; height: 38px; border-radius: 12px; }
+      .brand-mark::before { top: 10px; left: 9px; width: 20px; height: 7px; }
+      .brand-mark::after { top: 21px; left: 14px; width: 14px; height: 7px; }
+      .brand-name { font-size: 21px; }
+      .main-nav { inset: 76px 14px auto; grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .hero-section { padding: 60px 0; }
+    .hero-grid { display: grid; grid-template-columns: 1fr 340px; gap: 40px; align-items: start; }
+    .hero-main { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 40px; box-shadow: var(--shadow); }
+    .hero-tag { display: inline-block; padding: 4px 12px; background: var(--green-pale); color: var(--green); border-radius: 99px; font-size: 12px; font-weight: 800; margin-bottom: 16px; }
+    .hero-title { font-size: 32px; font-weight: 900; margin-bottom: 12px; line-height: 1.3; }
+    .hero-desc { color: var(--muted); font-size: 15px; margin-bottom: 24px; }
+    
+    .button-group { display: flex; gap: 12px; flex-wrap: wrap; }
+    .button { padding: 12px 24px; border-radius: 12px; font-size: 14px; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+    .button.primary { background: var(--green); color: white; }
+    .button.primary:hover { background: var(--green-dark); }
+    .button.secondary { background: var(--green-pale); color: var(--green); }
+
+    .score-board { background: var(--ink); color: white; border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow); }
+    .board-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; font-weight: 800; font-size: 14px; border-bottom: 1px solid rgba(255,255,255,.1); padding-bottom: 12px; }
+    .ranking { display: flex; flex-direction: column; gap: 12px; }
+    .rank-item { display: flex; align-items: center; gap: 12px; padding: 10px; border-radius: 12px; background: rgba(255,255,255,.05); }
+    .rank-number { width: 24px; height: 24px; border-radius: 50%; background: var(--lime); color: var(--ink); display: grid; place-items: center; font-weight: 900; font-size: 12px; }
+    .rank-name { font-weight: 800; display: block; font-size: 14px; }
+    .rank-meta { font-size: 11px; color: rgba(255,255,255,.6); }
+    .rank-score { margin-left: auto; text-align: right; }
+    .rank-score strong { display: block; color: var(--lime); font-size: 16px; }
+    .rank-score small { font-size: 10px; color: rgba(255,255,255,.5); }
+
+    .stat-strip { padding: 40px 0; }
+    .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; text-align: center; }
+    .stat { background: white; padding: 20px; border-radius: 16px; border: 1px solid var(--line); }
+    .stat strong { display: block; font-size: 24px; color: var(--green); font-weight: 900; }
+    .stat span { font-size: 12px; color: var(--muted); }
+
+    .section { padding: 60px 0; }
+    .section-head { margin-bottom: 30px; display: flex; justify-content: space-between; align-items: flex-end; }
+    .section-kicker { font-size: 12px; font-weight: 800; color: var(--green); text-transform: uppercase; margin-bottom: 4px; }
+    .section-head h2 { font-size: 24px; font-weight: 900; }
+    .section-desc { font-size: 14px; color: var(--muted); }
+
+    .recommend-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    @media (max-width: 960px) {
+      .recommend-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .recommend-grid { grid-template-columns: 1fr; }
+    }
+    .airport-card { background: white; border-radius: var(--radius); border: 1px solid var(--line); padding: 24px; display: flex; flex-direction: column; justify-content: space-between; }
+    .card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .card-icon { font-weight: 900; background: var(--green-pale); color: var(--green); padding: 6px 12px; border-radius: 8px; font-size: 14px; }
+    .badge { padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: 800; background: var(--lime); color: var(--ink); }
+    .badge.orange { background: #ffe4d6; color: var(--orange); }
+    .badge.dark { background: var(--ink); color: white; }
+    .airport-card h3 { font-size: 20px; font-weight: 900; margin-bottom: 4px; }
+    .slogan { font-size: 12px; color: var(--muted); margin-bottom: 16px; }
+    .metric-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; background: var(--paper); padding: 12px; border-radius: 12px; margin-bottom: 16px; text-align: center; }
+    .metric strong { display: block; font-size: 13px; font-weight: 800; }
+    .metric span { font-size: 10px; color: var(--muted); }
+    .card-bottom { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--line); padding-top: 16px; }
+    .price small { display: block; font-size: 10px; color: var(--muted); }
+    .price strong { font-size: 18px; color: var(--green); font-weight: 900; }
+    .card-arrow { width: 36px; height: 36px; border-radius: 50%; background: var(--green); color: white; display: grid; place-items: center; font-weight: 900; }
+
+    .compare-wrap { background: white; border-radius: var(--radius); border: 1px solid var(--line); overflow: hidden; }
+    .compare-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 13px; }
+    .compare-table th { background: var(--paper); padding: 14px 18px; font-weight: 800; color: var(--muted); border-bottom: 1px solid var(--line); }
+    .compare-table td { padding: 16px 18px; border-bottom: 1px solid var(--line); }
+    .compare-name { display: flex; align-items: center; gap: 10px; font-weight: 800; }
+    .mini-logo { width: 28px; height: 28px; border-radius: 6px; background: var(--green-pale); color: var(--green); display: grid; place-items: center; font-size: 11px; font-weight: 900; }
+    .compare-action { color: var(--green); font-weight: 800; text-decoration: underline; }
+
+    .offer-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
+    .offer-main { background: linear-gradient(135deg, var(--green-dark), #093824); color: white; padding: 32px; border-radius: var(--radius); }
+    .offer-label { background: var(--lime); color: var(--ink); padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 800; display: inline-block; margin-bottom: 12px; }
+    .offer-main h3 { font-size: 22px; font-weight: 900; margin-bottom: 8px; }
+    .offer-main p { font-size: 14px; color: rgba(255,255,255,.8); margin-bottom: 20px; }
+    .coupon { display: flex; align-items: center; gap: 12px; background: rgba(0,0,0,.3); padding: 12px 20px; border-radius: 12px; width: fit-content; }
+    .coupon code { font-family: monospace; font-size: 18px; font-weight: 900; color: var(--lime); }
+    .copy-btn { background: var(--lime); color: var(--ink); border: 0; padding: 6px 14px; border-radius: 6px; font-weight: 800; cursor: pointer; }
+
+    .coupon-list-section { margin-top: 48px; padding-top: 36px; border-top: 1px dashed var(--line); }
+    .coupon-list-head { margin-bottom: 24px; }
+    .coupon-list-kicker { font-size: 13px; font-weight: 800; color: #964326; margin-bottom: 4px; }
+    .coupon-list-head h3 { font-size: 24px; font-weight: 900; margin-bottom: 6px; color: var(--ink); }
+    .coupon-list-desc { font-size: 14px; color: var(--muted); }
+    .coupon-items { display: flex; flex-direction: column; gap: 14px; }
+    .coupon-item-card { background: #ffffff; border: 1px solid var(--line); border-radius: 16px; padding: 18px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; box-shadow: 0 4px 16px rgba(0,0,0,.02); transition: transform .2s ease, box-shadow .2s ease; }
+    .coupon-item-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.06); }
+    .coupon-item-info { min-width: 140px; }
+    .coupon-item-name { font-size: 18px; font-weight: 900; color: var(--ink); margin-bottom: 2px; }
+    .coupon-item-meta { font-size: 12px; color: var(--muted); }
+    .coupon-discount-badge { background: #fdf3e9; color: #b3562b; border: 1px solid #f7dfce; padding: 5px 14px; border-radius: 99px; font-size: 13px; font-weight: 800; white-space: nowrap; }
+    .coupon-code-box { display: inline-flex; align-items: center; gap: 8px; background: #faf8f5; border: 1px dashed #d6ccc0; padding: 8px 14px; border-radius: 10px; cursor: pointer; transition: background .2s ease; }
+    .coupon-code-box:hover { background: #f3efe8; }
+    .coupon-code-box code { font-family: monospace; font-size: 15px; font-weight: 900; color: var(--ink); }
+    .coupon-code-box .copy-icon { width: 15px; height: 15px; opacity: 0.6; stroke: currentColor; }
+    .coupon-action-btn { background: #964326; color: #ffffff; padding: 10px 22px; border-radius: 10px; font-size: 14px; font-weight: 800; text-decoration: none; display: inline-block; white-space: nowrap; transition: background .2s ease; }
+    .coupon-action-btn:hover { background: #7d351d; }
+
+    @media (max-width: 768px) {
+      .coupon-item-card { flex-wrap: wrap; gap: 12px; padding: 16px; }
+      .coupon-item-info { width: 100%; }
+      .coupon-action-btn { margin-left: auto; }
+    }
+
+    /* Warning Section Styles */
+    .warning-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+    .warning-card { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 32px; box-shadow: var(--shadow); }
+    .warning-badge-group { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+    .status-badge { padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 800; }
+    .status-badge.danger { background: #fde8e8; color: var(--red); border: 1px solid #f8b4b4; }
+    .status-badge.warning { background: #fff5ed; color: var(--orange); border: 1px solid #ffd8be; }
+    .status-badge.tip { background: #eef6f1; color: var(--green); border: 1px solid #c3e6d2; }
+    
+    .warning-table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 16px; margin: 20px 0; }
+    .warning-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 13px; }
+    .warning-table th { background: var(--paper); padding: 14px 16px; font-weight: 800; color: var(--muted); border-bottom: 1px solid var(--line); white-space: nowrap; }
+    .warning-table td { padding: 14px 16px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+    .warning-table tr:last-child td { border-bottom: none; }
+    
+    .signal-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: 20px; }
+    .signal-item { background: var(--paper); padding: 18px; border-radius: 14px; border-left: 4px solid var(--orange); }
+    .signal-item.danger { border-left-color: var(--red); }
+    .signal-item h4 { margin: 0 0 6px; font-size: 15px; font-weight: 900; }
+    .signal-item p { margin: 0; font-size: 12px; color: var(--muted); }
+
+    .advice-box { background: linear-gradient(135deg, #14231d, #07110d); color: white; padding: 28px; border-radius: 18px; margin-top: 24px; }
+    .advice-box h3 { margin: 0 0 12px; font-size: 18px; color: var(--lime); }
+    .advice-box ul { margin: 0; padding-left: 20px; font-size: 13px; color: rgba(255,255,255,.85); }
+    .advice-box li { margin-bottom: 8px; }
+
+    /* FAQ 30 Questions Styles */
+    .faq-search-box { position: relative; margin-bottom: 24px; }
+    .faq-search-input { width: 100%; padding: 14px 20px 14px 44px; border: 1px solid var(--line); border-radius: 14px; font-size: 15px; background: #fff; box-shadow: 0 4px 12px rgba(0,0,0,.03); transition: border-color .2s ease; }
+    .faq-search-input:focus { outline: none; border-color: var(--green); }
+    .faq-search-icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); width: 18px; height: 18px; color: var(--muted); pointer-events: none; }
+
+    .faq-nav-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px; }
+    .faq-tab-btn { padding: 8px 14px; border-radius: 10px; background: #fff; border: 1px solid var(--line); font-size: 13px; font-weight: 800; color: #405149; cursor: pointer; transition: all .2s ease; }
+    .faq-tab-btn:hover, .faq-tab-btn.active { background: var(--green); color: #fff; border-color: var(--green); }
+
+    .faq-group { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 24px 28px; margin-bottom: 24px; box-shadow: 0 6px 20px rgba(0,0,0,.02); }
+    .faq-group-title { font-size: 18px; font-weight: 900; color: var(--green-dark); margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid var(--line); display: flex; align-items: center; gap: 10px; }
+    .faq-group-title span { background: var(--green-pale); color: var(--green); padding: 3px 8px; border-radius: 6px; font-size: 12px; }
+
+    .faq-item-card { border-bottom: 1px solid rgba(223, 232, 225, .6); padding: 14px 0; }
+    .faq-item-card:last-child { border-bottom: none; }
+    .faq-question { font-size: 15px; font-weight: 800; color: var(--ink); margin-bottom: 6px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+    .faq-question:hover { color: var(--green); }
+    .faq-answer { font-size: 13.5px; color: #4e6056; line-height: 1.65; margin-top: 4px; }
+    .faq-answer strong { color: var(--ink); }
+
+    /* Client Knowledge Matrix Styles */
+    .knowledge-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; margin-top: 24px; }
+    .knowledge-card { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 22px; transition: transform .2s ease, box-shadow .2s ease; display: flex; flex-direction: column; justify-content: space-between; }
+    .knowledge-card:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(0,0,0,.06); }
+    .knowledge-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    .knowledge-platform-badge { font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 6px; background: var(--paper); color: var(--muted); }
+    .knowledge-platform-badge.win { background: #e6f4ff; color: #0958d9; }
+    .knowledge-platform-badge.mac { background: #f6ffed; color: #389e0d; }
+    .knowledge-platform-badge.ios { background: #fff7e6; color: #d46b08; }
+    .knowledge-platform-badge.android { background: #f9f0ff; color: #531dab; }
+    .knowledge-platform-badge.cross { background: var(--green-pale); color: var(--green-dark); }
+    .knowledge-card h3 { font-size: 18px; font-weight: 900; color: var(--ink); margin-bottom: 8px; }
+    .knowledge-card p { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 16px; flex-grow: 1; }
+    .knowledge-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
+    .knowledge-tag { font-size: 10px; font-weight: 800; background: var(--paper); color: #55665e; padding: 3px 8px; border-radius: 5px; border: 1px solid rgba(223, 232, 225, .8); }
+    .knowledge-link { font-size: 13px; font-weight: 800; color: var(--green); display: inline-flex; align-items: center; gap: 6px; text-decoration: none; }
+    .knowledge-link:hover { color: var(--green-dark); text-decoration: underline; }
+
+    footer { background: var(--ink); color: white; padding: 40px 0; font-size: 13px; margin-top: 60px; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-container nav-wrap">
+      <a class="brand" href="index.html" aria-label="机场选首页">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">机场<em>选</em></span>
+      </a>
+      <nav class="main-nav" id="mainNav" aria-label="主导航">
+        <a class="active" href="index.html">首页</a>
+        <a href="#recommend">机场推荐</a>
+        <a href="#recommend">性价比机场</a>
+        <a href="#compare">机场对比</a>
+        <a href="#offers">机场优惠码</a>
+        <a href="#faq">机场FAQ</a>
+        <a href="#warning">跑路预警</a>
+        <a href="#knowledge">机场知识库</a>
+        <a href="#about">关于</a>
+      </nav>
+      <a class="header-cta" href="#recommend">开始选机场</a>
+      <button class="header-menu" id="headerMenu" type="button" aria-label="打开导航" aria-expanded="false" aria-controls="mainNav"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero-section">
+      <div class="container hero-grid">
+        <div class="hero-main">
+          <span class="hero-tag">本月编辑推荐 · IEPL 物理专线</span>
+          <h1 class="hero-title">速界 IEPL 专线机场评测与推荐</h1>
+          <p class="hero-desc">端到端独享 IEPL 物理专线，4K/8K 视频秒开，无惧晚高峰拥堵，为您提供长期稳定机场推荐与稳定翻墙机场排行榜，全站实测节点防掉线保障。</p>
+          <div class="button-group">
+            <a class="button primary" href="https://lqy001.speedworldaff.com/#/register?code=p3EKNmlp" target="_blank">直达速界官网注册 &rarr;</a>
+            <a class="button secondary" href="sujie.html" target="_blank">查看详细跑分评测</a>
+          </div>
+        </div>
+
+        <aside class="score-board">
+          <div class="board-top">
+            <span>机场选 · 本周评分榜</span>
+            <span>2026 / 10</span>
+          </div>
+          <div class="ranking">
+            <a class="rank-item" href="sujie.html" target="_blank">
+              <span class="rank-number">1</span>
+              <span>
+                <span class="rank-name">速界 IEPL</span>
+                <span class="rank-meta">企业级专线 · 低延迟</span>
+              </span>
+              <span class="rank-score"><strong>9.6</strong><small>综合评分</small></span>
+            </a>
+            <a class="rank-item" href="jilianyun.html" target="_blank">
+              <span class="rank-number">2</span>
+              <span>
+                <span class="rank-name">极连云</span>
+                <span class="rank-meta">IPLC全专线 · 低延迟</span>
+              </span>
+              <span class="rank-score"><strong>9.2</strong><small>综合评分</small></span>
+            </a>
+            <a class="rank-item" href="bianyuan.html" target="_blank">
+              <span class="rank-number">3</span>
+              <span>
+                <span class="rank-name">边缘节点</span>
+                <span class="rank-meta">VLESS专线 · 原生IP</span>
+              </span>
+              <span class="rank-score"><strong>9.0</strong><small>综合评分</small></span>
+            </a>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="stat-strip">
+      <div class="container stats">
+        <div class="stat"><strong>86+</strong><span>累计实测机场</span></div>
+        <div class="stat"><strong>1,240h</strong><span>节点监测时长</span></div>
+        <div class="stat"><strong>32</strong><span>跑路与风险记录</span></div>
+        <div class="stat"><strong>7 天</strong><span>榜单更新周期</span></div>
+      </div>
+    </section>
+
+    <section class="section" id="recommend">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">Featured Airports</p>
+            <h2>2026 年值得选择的主力机场</h2>
+            <p class="section-desc">不只看高峰速度，更看晚高峰稳定性、流媒体/AI 解锁与售后响应以及优惠价格机场——2026 便宜好用翻墙机场速界机场</p>
+          </div>
+        </div>
+
+        <div class="recommend-grid">
+          <article class="airport-card">
+            <div class="card-top">
+              <div class="card-icon">速界</div>
+              <span class="badge">编辑首选</span>
+            </div>
+            <h3>速界 IEPL</h3>
+            <p class="slogan">专线直达，极速无界，晚高峰跑满带宽</p>
+            <div class="metric-row">
+              <div class="metric"><strong>99.9%</strong><span>可用率</span></div>
+              <div class="metric"><strong>18ms</strong><span>平均延迟</span></div>
+              <div class="metric"><strong>4K/8K</strong><span>流媒体</span></div>
+            </div>
+            <div class="card-bottom">
+              <div class="price">
+                <small>年付折合低至</small>
+                <strong>¥6<span> / 月</span></strong>
+              </div>
+              <a class="card-arrow" href="sujie.html" target="_blank">&rarr;</a>
+            </div>
+          </article>
+
+          <article class="airport-card">
+            <div class="card-top">
+              <div class="card-icon">极连</div>
+              <span class="badge orange">IPLC专线</span>
+            </div>
+            <h3>极连云</h3>
+            <p class="slogan">全专线架构，低延迟与不限时流量包</p>
+            <div class="metric-row">
+              <div class="metric"><strong>99%</strong><span>可用率</span></div>
+              <div class="metric"><strong>28ms</strong><span>平均延迟</span></div>
+              <div class="metric"><strong>IPLC/IEPL</strong><span>全专线</span></div>
+            </div>
+            <div class="card-bottom">
+              <div class="price">
+                <small>入门年付折合</small>
+                <strong>¥9.83<span> / 月</span></strong>
+              </div>
+              <a class="card-arrow" href="jilianyun.html" target="_blank">&rarr;</a>
+            </div>
+          </article>
+
+          <article class="airport-card">
+            <div class="card-top">
+              <div class="card-icon">边缘</div>
+              <span class="badge dark">VLESS专线</span>
+            </div>
+            <h3>边缘节点</h3>
+            <p class="slogan">VLESS + IEPL，低价专线与原生 IP</p>
+            <div class="metric-row">
+              <div class="metric"><strong>60+</strong><span>节点地区</span></div>
+              <div class="metric"><strong>不限</strong><span>设备数</span></div>
+              <div class="metric"><strong>全解锁</strong><span>流媒体/AI</span></div>
+            </div>
+            <div class="card-bottom">
+              <div class="price">
+                <small>入门套餐低至</small>
+                <strong>¥9<span> / 月</span></strong>
+              </div>
+              <a class="card-arrow" href="bianyuan.html" target="_blank">&rarr;</a>
+            </div>
+          </article>
+
+          <article class="airport-card">
+            <div class="card-top">
+              <div class="card-icon">光年</div>
+              <span class="badge orange">IPLC/IEPL</span>
+            </div>
+            <h3>光年梯</h3>
+            <p class="slogan">全专线架构，低延迟与不限时流量包</p>
+            <div class="metric-row">
+              <div class="metric"><strong>950M</strong><span>香港下行</span></div>
+              <div class="metric"><strong>28ms</strong><span>平均延迟</span></div>
+              <div class="metric"><strong>IPLC/IEPL</strong><span>全专线</span></div>
+            </div>
+            <div class="card-bottom">
+              <div class="price">
+                <small>入门套餐低至</small>
+                <strong>¥9.83<span> / 月</span></strong>
+              </div>
+              <a class="card-arrow" href="guannt.html" target="_blank">&rarr;</a>
+            </div>
+          </article>
+
+          <article class="airport-card">
+            <div class="card-top">
+              <div class="card-icon">快狸</div>
+              <span class="badge">全专线</span>
+            </div>
+            <h3>快狸</h3>
+            <p class="slogan">全 IEPL/IPLC 专线，多设备不限连</p>
+            <div class="metric-row">
+              <div class="metric"><strong>800M+</strong><span>高峰测速</span></div>
+              <div class="metric"><strong>1.0x</strong><span>全倍率</span></div>
+              <div class="metric"><strong>IEPL/IPLC</strong><span>全专线</span></div>
+            </div>
+            <div class="card-bottom">
+              <div class="price">
+                <small>入门套餐低至</small>
+                <strong>¥10<span> / 月</span></strong>
+              </div>
+              <a class="card-arrow" href="kuaili.html" target="_blank">&rarr;</a>
+            </div>
+          </article>
+
+          <article class="airport-card">
+            <div class="card-top">
+              <div class="card-icon">可信</div>
+              <span class="badge orange">IEPL专线</span>
+            </div>
+            <h3>可信云</h3>
+            <p class="slogan">IEPL 专线传输，解锁 Netflix 与 AI</p>
+            <div class="metric-row">
+              <div class="metric"><strong>99.5%</strong><span>可用率</span></div>
+              <div class="metric"><strong>22ms</strong><span>平均延迟</span></div>
+              <div class="metric"><strong>IEPL</strong><span>专线</span></div>
+            </div>
+            <div class="card-bottom">
+              <div class="price">
+                <small>入门套餐低至</small>
+                <strong>¥12<span> / 月</span></strong>
+              </div>
+              <a class="card-arrow" href="kexinyun.html" target="_blank">&rarr;</a>
+            </div>
+          </article>
+
+          <article class="airport-card">
+            <div class="card-top">
+              <div class="card-icon">云图</div>
+              <span class="badge dark">金融级专线</span>
+            </div>
+            <h3>云图</h3>
+            <p class="slogan">金融级专线传输，原生 IP 全解锁</p>
+            <div class="metric-row">
+              <div class="metric"><strong>150GB</strong><span>月流量</span></div>
+              <div class="metric"><strong>1.0x</strong><span>全倍率</span></div>
+              <div class="metric"><strong>全解锁</strong><span>流媒体/AI</span></div>
+            </div>
+            <div class="card-bottom">
+              <div class="price">
+                <small>入门套餐低至</small>
+                <strong>¥20<span> / 月</span></strong>
+              </div>
+              <a class="card-arrow" href="yuntu.html" target="_blank">&rarr;</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="compare">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">Side By Side</p>
+            <h2>机场横向对比表</h2>
+            <p class="section-desc">用相同维度横向比较，找到最适合你需求的选择。</p>
+          </div>
+        </div>
+
+        <div class="compare-wrap">
+          <table class="compare-table">
+            <thead>
+              <tr>
+                <th>机场名称</th>
+                <th>综合评分</th>
+                <th>起步价格</th>
+                <th>线路类型</th>
+                <th>流媒体 / AI 解锁</th>
+                <th>运营状态</th>
+                <th>评测与跳转</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="compare-name"><span class="mini-logo">SJ</span>速界 IEPL</span></td>
+                <td><strong style="color:#ed963d;">★ 9.6</strong></td>
+                <td>¥6 / 月 (年付折合)</td>
+                <td>真 IEPL 内网专线</td>
+                <td>Netflix · Disney+ · ChatGPT 全解锁</td>
+                <td><span style="color:var(--green); font-weight:800;">稳定运营</span></td>
+                <td><a class="compare-action" href="sujie.html" target="_blank">详细评测 &rarr;</a></td>
+              </tr>
+              <tr>
+                <td><span class="compare-name"><span class="mini-logo">JL</span>极连云</span></td>
+                <td><strong style="color:#ed963d;">★ 9.2</strong></td>
+                <td>¥9.83 / 月 (年付折合)</td>
+                <td>IPLC / IEPL 全专线</td>
+                <td>Netflix · ChatGPT · 游戏低延迟</td>
+                <td><span style="color:var(--green); font-weight:800;">稳定运营</span></td>
+                <td><a class="compare-action" href="jilianyun.html" target="_blank">详细评测 &rarr;</a></td>
+              </tr>
+              <tr>
+                <td><span class="compare-name"><span class="mini-logo">BY</span>边缘节点</span></td>
+                <td><strong style="color:#ed963d;">★ 9.0</strong></td>
+                <td>¥9 / 月 (年付折合)</td>
+                <td>VLESS + IEPL 专线</td>
+                <td>Netflix · ChatGPT · 60+ 节点</td>
+                <td><span style="color:var(--green); font-weight:800;">稳定运营</span></td>
+                <td><a class="compare-action" href="bianyuan.html" target="_blank">详细评测 &rarr;</a></td>
+              </tr>
+              <tr>
+                <td><span class="compare-name"><span class="mini-logo">GN</span>光年梯</span></td>
+                <td><strong style="color:#ed963d;">★ 9.1</strong></td>
+                <td>¥9.83 / 月 (年付折合)</td>
+                <td>IPLC / IEPL 全专线</td>
+                <td>Netflix · ChatGPT · 不限时包</td>
+                <td><span style="color:var(--green); font-weight:800;">稳定运营</span></td>
+                <td><a class="compare-action" href="guannt.html" target="_blank">详细评测 &rarr;</a></td>
+              </tr>
+              <tr>
+                <td><span class="compare-name"><span class="mini-logo">KL</span>快狸</span></td>
+                <td><strong style="color:#ed963d;">★ 9.0</strong></td>
+                <td>¥10 / 月 (年付折合)</td>
+                <td>IEPL / IPLC 全专线</td>
+                <td>Netflix · Disney+ · 不限设备</td>
+                <td><span style="color:var(--green); font-weight:800;">稳定运营</span></td>
+                <td><a class="compare-action" href="kuaili.html" target="_blank">详细评测 &rarr;</a></td>
+              </tr>
+              <tr>
+                <td><span class="compare-name"><span class="mini-logo">KX</span>可信云</span></td>
+                <td><strong style="color:#ed963d;">★ 8.9</strong></td>
+                <td>¥12 / 月 (月付起)</td>
+                <td>IEPL 专线</td>
+                <td>Netflix · ChatGPT · 4K/8K秒开</td>
+                <td><span style="color:var(--green); font-weight:800;">稳定运营</span></td>
+                <td><a class="compare-action" href="kexinyun.html" target="_blank">详细评测 &rarr;</a></td>
+              </tr>
+              <tr>
+                <td><span class="compare-name"><span class="mini-logo">YT</span>云图</span></td>
+                <td><strong style="color:#ed963d;">★ 8.9</strong></td>
+                <td>¥20 / 月 (月付起)</td>
+                <td>金融级专线</td>
+                <td>Netflix · Disney+ · 原生 IP</td>
+                <td><span style="color:var(--green); font-weight:800;">稳定运营</span></td>
+                <td><a class="compare-action" href="yuntu.html" target="_blank">详细评测 &rarr;</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">Knowledge Base & FAQ</p>
+            <h2>机场常见问题 30 问（小白必看指南）</h2>
+            <p class="section-desc">「机场」只是代理服务商的通俗叫法。整理 10 组独立专题、共 30 个核心避坑问答，支持快捷搜索与导航。</p>
+          </div>
+        </div>
+
+        <div class="faq-search-box">
+          <svg class="faq-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input type="text" id="faqSearchInput" class="faq-search-input" placeholder="输入关键词搜索（如：订阅地址、VLESS、IEPL专线、Netflix解锁、ChatGPT...）">
+        </div>
+
+        <div class="faq-nav-tabs">
+          <button class="faq-tab-btn active" onclick="scrollToFaqGroup('all')">全部问题</button>
+          <button class="faq-tab-btn" onclick="scrollToFaqGroup('faq-g1')">1. 订阅地址</button>
+          <button class="faq-tab-btn" onclick="scrollToFaqGroup('faq-g2')">2. 节点选择</button>
+          <button class="faq-tab-btn" onclick="scrollToFaqGroup('faq-g3')">3. 线路类型</button>
+          <button class="faq-tab-btn" onclick="scrollToFaqGroup('faq-g4')">4. 协议机制</button>
+          <button class="faq-tab-btn" onclick="scrollToFaqGroup('faq-g5')">5. 测速网速</button>
+          <button class="faq-tab-btn" onclick="scrollToFaqGroup('faq-g6')">6. 流量限制</button>
+          <button class="faq-tab-btn" onclick="scrollToFaqGroup('faq-g7')">7. 客户端使用</button>
+          <button class="faq-tab-btn" onclick="scrollToFaqGroup('faq-g8')">8. 流媒体解锁</button>
+          <button class="faq-tab-btn" onclick="scrollToFaqGroup('faq-g9')">9. AI工具使用</button>
+          <button class="faq-tab-btn" onclick="scrollToFaqGroup('faq-g10')">10. 购买与防坑</button>
+        </div>
+
+        <div id="faqContainer">
+          <!-- 组1：订阅地址 -->
+          <div class="faq-group" id="faq-g1">
+            <div class="faq-group-title">一、 订阅地址与同步配置 <span>3 问</span></div>
+            <div class="faq-item-card">
+              <div class="faq-question">Q1: 什么是机场订阅地址？为什么不能把订阅链接泄露给他人？</div>
+              <div class="faq-answer">订阅地址是一串包含你账户身份凭证的专属 URL。客户端（如 Clash、Shadowrocket）通过访问该链接自动获取最新节点列表。<strong>切勿泄露</strong>：他人拿到你的订阅链接即可免费使用你的流量，甚至导致账户因多设备异常并发而被封禁。</div>
+            </div>
+            <div class="faq-item-card">
+              <div class="faq-question">Q2: 订阅更新失败、提示“域名解析错误”或“连接超时”怎么办？</div>
+              <div class="faq-answer">通常有三种原因：1. 机场官网更新了域名，需登录后台复制新订阅；2. 本地网络开启了旧代理阻碍了更新，可先关闭代理再点更新；3. 开启客户端的“ Allow Insecure（允许不安全连接）”或更新订阅转换域名。推荐选用 <a href="sujie.html" target="_blank" style="color:var(--green);font-weight:800;">速界 IEPL 专线</a> 这类具备多域名容灾的稳定服务。</div>
+            </div>
+            <div class="faq-item-card">
+              <div class="faq-question">Q3: 单个节点链接（如 vmess:// 或 ss://）和通用订阅有何区别？</div>
+              <div class="faq-answer">单节点链接仅代表某一台服务器的固定配置，服务器 IP 一旦更换即失效；而通用订阅能够动态同步机场节点变更、自动负载均衡与健康检查，是目前主流客户端最推荐的导入方式。</div>
+            </div>
+          </div>
+
+          <!-- 组2：节点选择 -->
+          <div class="faq-group" id="faq-g2">
+            <div class="faq-group-title">二、 节点选择与地区匹配 <span>3 问</span></div>
+            <div class="faq-item-card">
+              <div class="faq-question">Q4: 香港、台湾、新加坡、日本、美国节点该如何选择？</div>
+              <div class="faq-answer"><strong>香港/新加坡</strong>：物理距离近，延迟低（通常 15~30ms），适合日常网页浏览与游戏加速；<strong>日本/台湾</strong>：适合观看区域限制动漫和游戏服；<strong>美国节点</strong>：解锁各类 AI 平台（如 Claude、ChatGPT）与北美本土服务的最强通用选择。</div>
+            </div>
+            <div class="faq-item-card">
+              <div class="faq-question">Q5: 为什么有时候节点延迟显示很低，但实际网速却很慢？</div>
+              <div class="faq-answer">延迟（Ping/ms）反映的是数据包往返时间，而网速（Mbps）反映的是单秒传输带宽。低延迟不等于高带宽。晚高峰拥堵时入口带宽饱和，即使延迟显示 20ms，网速也可能卡顿。建议首选物理专线机场如 <a href="guannt.html" target="_blank" style="color:var(--green);font-weight:800;">光年梯专线</a>。</div>
+            </div>
+            <div class="faq-item-card">
+              <div class="faq-question">Q6: 什么是“原生 IP（Residential/Native IP）”？有什么好处？</div>
+              <div class="faq-answer">原生 IP 是指由当地基础运营商直接分配给住宅或商用的 IP，而非广播 IDC 机房 IP。原生 IP 的风控级别极低，能完美通过 Netflix 完整版片库、Disney+ 以及 OpenAI 的 IP 校验。</div>
+            </div>
+          </div>
+
+          <!-- 组3：线路类型 -->
+          <div class="faq-group" id="faq-g3">
+            <div class="faq-group-title">三、 线路架构（直连 / 中转 / IPLC / IEPL） <span>3 问</span></div>
+            <div class="faq-item-card">
+              <div class="faq-question">Q7: 直连线路、公网中转、IPLC 专线与 IEPL 专线有何区别？</div>
+              <div class="faq-answer"><strong>直连</strong>：性价比高，但晚高峰极易受公网拥堵影响；<strong>BGP 中转</strong>：国内入口转发，大幅降低延迟；<strong>IPLC/IEPL 专线</strong>：端到端跨境私有物理专线，数据“零过墙”，不受晚高峰拥堵与敏感时期影响。</div>
+            </div>
+            <div class="faq-item-card">
+              <div class="faq-question">Q8: 为什么 IEPL 专线机场价格比普通直连机场贵？</div>
+              <div class="faq-answer">IEPL（国际以太网专线）向电信运营商按月租用物理光缆传输，具备独享出口带宽与极低抖动（如 <a href="bianyuan.html" target="_blank" style="color:var(--green);font-weight:800;">边缘节点</a> 提供的 VLESS+IEPL）。其硬件成本比公网直连高出数倍，但能保证 99.9% 稳定率。</div>
+            </div>
+            <div class="faq-item-card">
+              <div class="faq-question">Q9: 什么是 BGP 多线入口？对国内用户体验提升有多大？</div>
+              <div class="faq-answer">BGP 能够自动识别电信、联通、移动用户，并引导至响应最快的接入入口。消除跨网互联延迟，使用户即使在移动或广电宽带下也能获得与电信专线相当的响应速度。</div>
+            </div>
+          </div>
+
+          <!-- 组4：协议机制 -->
+          <div class="faq-group" id="faq-g4">
+            <div class="faq-group-title">四、 代理协议机制（Shadowsocks / VLESS / Trojan / Hysteria） <span>3 问</span></div>
+            <div class="faq-item-card">
+              <div class="faq-question">Q10: Shadowsocks、V2Ray/VMess、VLESS、Trojan 各有什么优缺点？</div>
+              <div class="faq-answer"><strong>SS</strong>：轻量且高兼容，多用于专线；<strong>VMess</strong>：功能丰富但头部开销较大；<strong>VLESS</strong>：轻量无状态且性能强劲；<strong>Trojan</strong>：伪装成标准 HTTPS 流量，隐蔽性极高。</div>
+            </div>
+            <div class="faq-item-card">
+              <div class="faq-question">Q11: 为什么近年来 VLESS + REALITY 协议越来越受欢迎？</div>
+              <div class="faq-answer">REALITY 能够借用真实大厂网站的 TLS 证书与握手特征，无需自己购买域名即可实现完美的流量伪装，大幅降低了节点被识别或封禁的风险。</div>
+            </div>
+            <div class="faq-item-card">
+              <div class="faq-question">Q12: Hysteria 2 / TUIC 协议对弱网环境提升有多大？</div>
+              <div class="faq-answer">这两个基于 UDP/QUIC 的协议具备强大的拥塞控制能力，在丢包率高、信号差的移动网络或校园网环境下，能拉满持续下载带宽。</div>
+            </div>
+          </div>
+
+          <!-- 组5：网速与测速 -->
+          <div class="faq-group" id="faq-g5">
+            <div class="faq-group-title">五、 测速工具与实际网速 <span>3 问</span></div>
+            <div class="faq-item-card">
+              <div class="faq-question">Q13: 用 Speedtest 或 YouTube 测速能否代表真实使用体验？</div>
+              <div class="faq-answer">测速只能反映当前瞬间的最高峰值带宽。真正影响体验的是<strong>晚高峰 20:00-23:00 的持续稳定性</strong>与延迟抖动。持续稳定跑满 4K 视频仅需 25-50Mbps 带宽。</div>
+            </div>
+            <div class="faq-item-card">
+              <div class="faq-question">Q14: 为什么用 Clash 批量测速显示大量“Timeout”或“9999ms”？</div>
+              <div class="faq-answer">Clash 的批量测速是向指定服务器发送 HTTP 请求，若连通超时或节点不支持并发请求就会显示 Timeout。建议开启单个节点单独测试，或使用专门的 <a href="kuaili.html" target="_blank" style="color:var(--green);font-weight:800;">快狸全专线</a> 提升并发连通率。</div>
+            </div>
+            <div class="faq-item-card">
+              <div class="faq-question">Q15: 4K 拖动与 8K 视频播放对机场网络有何具体要求？</div>
+              <div class="faq-answer">4K 60帧视频需要持续 35Mbps 以上无抖动的带宽；8K 视频则需要 100Mbps 以上持续速率与极其稳定的内网中转，不建议使用低价直连机场观看高码率视频。</div>
+            </div>
+          </div>
+
+          <!-- 组6：流量限制与设备数 -->
+          <div class="faq-group" id="faq-g6">
+            <div class="faq-group-title">六、 流量扣费、倍率与设备限制 <span>3 问</span></div>
+            <div class="faq-item-card">
+              <div class="faq-question">Q16: 什么是节点“扣费倍率（0.5x / 1.0x / 5.0x）”？</div>
+              <div class="faq-answer">倍率决定你实际消耗的套餐流量。例如使用 1.0x 节点下载 1GB 扣除 1GB；使用 5.0x 高速节点下载 1GB 则扣除 5GB。选购时应认准全节点 1 倍率扣费的透明机场（如 <a href="yuntu.html" target="_blank" style="color:var(--green);font-weight:800;">云图金融级专线</a>）。</div>
+            </div>
+            <div class="faq-item-card">
+              <div class="faq-question">Q17: 套餐提示“限制 3 台设备”是如何判定的？超出会被封号吗？</div>
+              <div class="faq-answer">机场服务端通过一段时间内同时连接的公网 IP 数量或独立设备 ID 汇总计算。同一家庭 Wi-Fi 下多台设备通常算作 1 个 IP；若将订阅分享给异地朋友使用则会被判定为多设备越界而暂时封禁。</div>
+            </div>
+            <div class="faq-item-card">
+              <div class="faq-question">Q18: 什么是“不限时流量包”？适合哪些人群？</div>
+              <div class="faq-answer">按量计费包没有固定月度有效期，一次购买 500GB 直至用完为止。非常适合作为备用线路、低频出差人士或仅用于收发邮件轻度用户。</div>
+            </div>
+          </div>
+
+          <!-- 组7：客户端软件 -->
+          <div class="faq-group" id="faq-g7">
+            <div class="faq-group-title">七、 客户端选择与多平台配置 <span>3 问</span></div>
+            <div class="faq-item-card">
+              <div class="faq-question">Q19: Windows / Mac / iOS / Android 推荐使用哪些客户端？</div>
+              <div class="faq-answer"><strong>Windows/Mac</strong>：推荐 Clash Verge Rev 或 v2rayN；<strong>iOS（iPhone）</strong>：首选 Shadowrocket（小火箭）或 Sing-box；<strong>Android</strong>：推荐 Flclash 或 v2rayNG；<strong>软路由</strong>：OpenClash 或 PassWall。</div>
+            </div>
+            <div class="faq-item-card">
+              <div class="faq-question">Q20: 客户端开启后为什么本地网页打不开或微信图片发不出？</div>
+              <div class="faq-answer">通常是分流规则配置错误。请检查客户端路由模式是否设为“Rule（规则模式）”而非“Global（全局模式）”。全局模式会将国内流量也强制走代理，导致国内应用响应极慢。</div>
+            </div>
+            <div class="faq-item-card">
+              <div class="faq-question">Q21: 什么是 Clash 订阅转换（Subconverter）？安全性如何？</div>
+              <div class="faq-answer">订阅转换是将某种协议格式转换为另一种客户端兼容格式的工具。<strong>隐私提醒</strong>：尽量使用机场官方自带转换或自建服务，切勿使用来源不明的第三方转换链接，防止订阅被拖库泄漏。</div>
+            </div>
+          </div>
+
+          <!-- 组8：流媒体解锁 -->
+          <div class="faq-group" id="faq-g8">
+            <div class="faq-group-title">八、 流媒体（Netflix/Disney+/YouTube）解锁 <span>3 问</span></div>
+            <div class="faq-item-card">
+              <div class="faq-question">Q22: 为什么有的节点能看 Netflix，却提示“仅限自制剧”？</div>
+              <div class="faq-answer">Netflix 对机房 IP 进行了风控识别。非原生机房 IP 只能观看 Netflix 自制剧集（如《怪奇物语》）；只有通过拥有当地原生落地 IP 的节点（如 <a href="kexinyun.html" target="_blank" style="color:var(--green);font-weight:800;">可信云 IEPL</a>），才能解锁完整非自制剧集片库。</div>
+            </div>
+            <div class="faq-item-card">
+              <div class="faq-question">Q23: Disney+ 提示“Error 83”或无法加载界面该怎么解决？</div>
+              <div class="faq-answer">Disney+ 对节点 IP 的纯净度要求极高。请尝试清理浏览器缓存、开启客户端 DNS 伪装，并切换至支持 Disney+ 专门解锁的新加坡或美区原生节点。</div>
+            </div>
+            <div class="faq-item-card">
+              <div class="faq-question">Q24: YouTube 视频默认画质低、频繁缓冲卡顿怎么解决？</div>
+              <div class="faq-answer">首先确认客户端开启了 UDP 转发（用于 QUIC 协议）；其次检查节点延迟是否过高。首选物理专线节点能有效提高视频 InitialRTT 握手速度。</div>
+            </div>
+          </div>
+
+          <!-- 组9：AI 工具解锁 -->
+          <div class="faq-group" id="faq-g9">
+            <div class="faq-group-title">九、 AI 工具（ChatGPT / Claude / Gemini）使用 <span>3 问</span></div>
+            <div class="faq-item-card">
+              <div class="faq-question">Q25: 访问 ChatGPT 提示“Access Denied 1020”或“Country not supported”？</div>
+              <div class="faq-answer">OpenAI 屏蔽了香港、中国大陆等地区的 IP 及高风险数据中心 IP。解决方案：切换至美、日、台等受支持地区的节点，并确保节点具备住宅 IP 伪装。</div>
+            </div>
+            <div class="faq-item-card">
+              <div class="faq-question">Q26: 为什么使用 Claude 容易出现账号被封（Ban）的情况？</div>
+              <div class="faq-answer">Anthropic 对节点的 IP 变动与跳跃极其敏感。若多人共享同一节点 IP 访问 Claude，极易触发风控联坐机制。建议使用纯净度高的原生 IP 节点并固定节点登录。</div>
+            </div>
+            <div class="faq-item-card">
+              <div class="faq-question">Q27: 搭配 API 调用（如 Midjourney / OpenAI API）对节点有何要求？</div>
+              <div class="faq-answer">API 调用需要节点具备高并发连通能力与无丢包的环境。建议开启系统的 Tun 虚拟网卡模式，保证命令行与代码运行库的请求无缝通过代理。</div>
+            </div>
+          </div>
+
+          <!-- 组10：购买防坑 -->
+          <div class="faq-group" id="faq-g10">
+            <div class="faq-group-title">十、 选购防坑与长期维护 <span>3 问</span></div>
+            <div class="faq-item-card">
+              <div class="faq-question">Q28: 为什么强烈建议新手“先选月付，拒绝多年付”？</div>
+              <div class="faq-answer">机场行业受政策与 IDC 上游影响大，跑路风险客观存在。按月付费即使出现异常损耗也极其有限。只有经过半年以上稳定考验的品牌才可考虑长周期。具体风险可查看 <a href="#warning" style="color:var(--green);font-weight:800;">2025-2026 跑路预警黑名单</a>。</div>
+            </div>
+            <div class="faq-item-card">
+              <div class="faq-question">Q29: 9.9 元/年 这种超低价“平民机场”靠谱吗？有什么潜在风险？</div>
+              <div class="faq-answer">这类机场多采用超售公网直连线路，晚高峰网速几乎瘫痪；且老板运营成本无法覆盖，极易发生“超售割韭菜后直接跑路”的现象。</div>
+            </div>
+            <div class="faq-item-card">
+              <div class="faq-question">Q30: 衡量一家优质机场的核心指标有哪些？</div>
+              <div class="faq-answer">认准四要素：1. <strong>线路架构</strong>（是否具备物理 IEPL/IPLC 专线）；2. <strong>运营时长</strong>（是否稳定运营 2 年以上）；3. <strong>客服响应速度</strong>（工单与 TG 频道维护频率）；4. <strong>倍率透明度</strong>（无暗扣与超高倍率陷阱）。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="offers">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">Verified Coupon</p>
+            <h2>本周主推独家优惠码</h2>
+          </div>
+        </div>
+
+        <div class="offer-grid">
+          <div class="offer-main">
+            <span class="offer-label">本周主推 · 开业特惠</span>
+            <h3>速界 IEPL 专线开业 8 折特惠，新用户享 24 小时免费试用</h3>
+            <p>全场套餐使用开业优惠码 sujie888 立享 8 折！年付折合低至 6元/月。</p>
+            <div class="coupon">
+              <code>sujie888</code>
+              <a href="https://lqy001.speedworldaff.com/#/register?code=p3EKNmlp" target="_blank" class="copy-btn" style="text-decoration:none;">前往官网注册 &rarr;</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="coupon-list-section">
+          <div class="coupon-list-head">
+            <p class="coupon-list-kicker">当前优惠</p>
+            <h3>目前有优惠码的机场</h3>
+            <p class="coupon-list-desc">按折扣力度从深到浅排列，点击复制优惠码，下单时粘贴到结算页就行。</p>
+          </div>
+
+          <div class="coupon-items">
+            <div class="coupon-item-card">
+              <div class="coupon-item-info">
+                <div class="coupon-item-name">边缘节点</div>
+                <div class="coupon-item-meta">VLESS专线 · ¥9/月起</div>
+              </div>
+              <div class="coupon-discount-badge">优惠折扣 8.5折</div>
+              <div class="coupon-code-box" data-code="xk808" title="点击复制优惠码">
+                <code>xk808</code>
+                <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              </div>
+              <a href="bianyuan.html" target="_blank" class="coupon-action-btn">立即前往</a>
+            </div>
+
+            <div class="coupon-item-card">
+              <div class="coupon-item-info">
+                <div class="coupon-item-name">极连云</div>
+                <div class="coupon-item-meta">IPLC专线 · ¥9.83/月起</div>
+              </div>
+              <div class="coupon-discount-badge">优惠折扣 8.5折</div>
+              <div class="coupon-code-box" data-code="JLY888" title="点击复制优惠码">
+                <code>JLY888</code>
+                <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              </div>
+              <a href="jilianyun.html" target="_blank" class="coupon-action-btn">立即前往</a>
+            </div>
+
+            <div class="coupon-item-card">
+              <div class="coupon-item-info">
+                <div class="coupon-item-name">光年梯</div>
+                <div class="coupon-item-meta">IPLC/IEPL全专线 · ¥9.83/月起</div>
+              </div>
+              <div class="coupon-discount-badge">优惠折扣 8折起</div>
+              <div class="coupon-code-box" data-code="GNT80" title="点击复制优惠码">
+                <code>GNT80</code>
+                <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              </div>
+              <a href="guannt.html" target="_blank" class="coupon-action-btn">立即前往</a>
+            </div>
+
+            <div class="coupon-item-card">
+              <div class="coupon-item-info">
+                <div class="coupon-item-name">快狸</div>
+                <div class="coupon-item-meta">IEPL/IPLC专线 · ¥10/月起</div>
+              </div>
+              <div class="coupon-discount-badge">优惠折扣 8折起</div>
+              <div class="coupon-code-box" data-code="sujie888" title="点击复制优惠码">
+                <code>sujie888</code>
+                <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              </div>
+              <a href="kuaili.html" target="_blank" class="coupon-action-btn">立即前往</a>
+            </div>
+
+            <div class="coupon-item-card">
+              <div class="coupon-item-info">
+                <div class="coupon-item-name">可信云</div>
+                <div class="coupon-item-meta">IEPL专线 · ¥12/月起</div>
+              </div>
+              <div class="coupon-discount-badge">优惠折扣 8.5折</div>
+              <div class="coupon-code-box" data-code="KX888" title="点击复制优惠码">
+                <code>KX888</code>
+                <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              </div>
+              <a href="kexinyun.html" target="_blank" class="coupon-action-btn">立即前往</a>
+            </div>
+
+            <div class="coupon-item-card">
+              <div class="coupon-item-info">
+                <div class="coupon-item-name">云图</div>
+                <div class="coupon-item-meta">金融级专线 · ¥20/月起</div>
+              </div>
+              <div class="coupon-discount-badge">优惠折扣 8.8折</div>
+              <div class="coupon-code-box" data-code="yt88" title="点击复制优惠码">
+                <code>yt88</code>
+                <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              </div>
+              <a href="yuntu.html" target="_blank" class="coupon-action-btn">立即前往</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="warning">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">Risk Monitoring & Scam Warning</p>
+            <h2>2025-2026 翻墙机场跑路预警与黑名单汇总（持续更新）</h2>
+            <p class="section-desc">由于国内 IDC 机房严查拔线与中转清退，大量机场出现节点大面积失效、客服装死或直接跑路现象。续费或选择新机场前请务必核对！</p>
+          </div>
+        </div>
+
+        <div class="warning-grid">
+          <div class="warning-card">
+            <div class="warning-badge-group">
+              <span class="status-badge danger">🔴 已跑路：官网挂掉/节点全灭/失联</span>
+              <span class="status-badge warning">🟠 高危：节点大面积失效/工单装死/收银正常</span>
+              <span class="status-badge tip">🟡 预警：域名无法访问/线路反复异常/主体风险</span>
+            </div>
+
+            <div class="warning-table-wrap">
+              <table class="warning-table">
+                <thead>
+                  <tr>
+                    <th>机场名称</th>
+                    <th>问题发生时间</th>
+                    <th>当前状态</th>
+                    <th>主要特征与异常表现</th>
+                    <th>核查与来源凭证</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>奈云 (Naiyun / NyCloud)</strong></td>
+                    <td>2026-06-09 起</td>
+                    <td><span class="status-badge danger">已跑路</span></td>
+                    <td>客服失联、节点不可用、官网打不开。姐妹机场频道已确认倒闭。</td>
+                    <td><a href="https://www.ermao.net/scamvpn/naiyun/" target="_blank" rel="noopener noreferrer" class="compare-action">查看二毛存证 &rarr;</a></td>
+                  </tr>
+                  <tr>
+                    <td><strong>CAC 机场</strong></td>
+                    <td>2026-06-30 起</td>
+                    <td><span class="status-badge tip">预警</span></td>
+                    <td>官网无法访问；与奈云、隐云、OKAC 同属一个运营主体，存在联动失效风险。</td>
+                    <td><a href="https://yifenjichang.net/airport-warnings/" target="_blank" rel="noopener noreferrer" class="compare-action">查看一分机场报告 &rarr;</a></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Koodog</strong></td>
+                    <td>2026-06-01</td>
+                    <td><span class="status-badge danger">已跑路</span></td>
+                    <td>官网异常跳转、订阅链接不可用、Telegram 群集中报障且无客服响应。</td>
+                    <td><a href="https://www.ermao.net/scamvpn/koodog/" target="_blank" rel="noopener noreferrer" class="compare-action">查看二毛存证 &rarr;</a></td>
+                  </tr>
+                  <tr>
+                    <td><strong>OKAC 机场</strong></td>
+                    <td>2026-05-11 起</td>
+                    <td><span class="status-badge tip">预警</span></td>
+                    <td>A线反复异常、多线路故障、数据丢失要求补单；同主体奈云已确认跑路。</td>
+                    <td><a href="https://www.ermao.net/scamvpn/okac/" target="_blank" rel="noopener noreferrer" class="compare-action">查看二毛存证 &rarr;</a></td>
+                  </tr>
+                  <tr>
+                    <td><strong>忍者云 (RenzheCloud)</strong></td>
+                    <td>2026-04-10</td>
+                    <td><span class="status-badge danger">已跑路</span></td>
+                    <td>节点长期大面积超时离线、工单邮件无人回复、TG 官方频道停止更新。</td>
+                    <td><a href="https://www.ermao.net/scamvpn/renzhe/" target="_blank" rel="noopener noreferrer" class="compare-action">查看二毛存证 &rarr;</a></td>
+                  </tr>
+                  <tr>
+                    <td><strong>蜜糖云 (SugarHoney)</strong></td>
+                    <td>2026-04-03</td>
+                    <td><span class="status-badge danger">已跑路</span></td>
+                    <td>全部节点离线、工单石沉大海，但官网充值入口依然可访问。</td>
+                    <td><a href="https://www.ermao.net/scamvpn/sugarhoney/" target="_blank" rel="noopener noreferrer" class="compare-action">查看二毛存证 &rarr;</a></td>
+                  </tr>
+                  <tr>
+                    <td><strong>FAST-LINK</strong></td>
+                    <td>2026-03-25</td>
+                    <td><span class="status-badge tip">预警</span></td>
+                    <td>订阅链接失效、无法访问常用站点，客服超 48 小时未回应。</td>
+                    <td><a href="https://yifenjichang.net/airport-warnings/" target="_blank" rel="noopener noreferrer" class="compare-action">查看一分机场报告 &rarr;</a></td>
+                  </tr>
+                  <tr>
+                    <td><strong>洞墙 (DlerCloud)</strong></td>
+                    <td>2026-02-26</td>
+                    <td><span class="status-badge danger">已跑路</span></td>
+                    <td>官网直接无法打开，全线节点失效，运营人员完全失联。</td>
+                    <td><a href="https://www.ermao.net/scamvpn/dlercloud/" target="_blank" rel="noopener noreferrer" class="compare-action">查看二毛存证 &rarr;</a></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Lray / 小牛云 / 阿童木</strong></td>
+                    <td>2025-2026 连续爆雷</td>
+                    <td><span class="status-badge warning">高危/跑路</span></td>
+                    <td>专用 APP 失效、线路全黑、工单不回但收银台依然开放充值。</td>
+                    <td><a href="https://www.ermao.net/scamvpn/jichang-paolu-huizong/" target="_blank" rel="noopener noreferrer" class="compare-action">二毛跑路汇总 &rarr;</a></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3 style="font-size: 20px; font-weight: 900; margin-top: 28px; margin-bottom: 12px;">🔍 机场跑路前的 5 大高危前兆信号</h3>
+            <p style="font-size: 14px; color: var(--muted);">根据行业监控规律，大部分机场在彻底“拔插头”前都会经历以下前兆特征：</p>
+
+            <div class="signal-list">
+              <div class="signal-item danger">
+                <h4>1. 节点大面积超时红联</h4>
+                <p>上游 IDC 机房清退或拔线，节点死了一片且持续数天无人修复。</p>
+              </div>
+              <div class="signal-item warning">
+                <h4>2. 客服工单集体装死</h4>
+                <p>提交工单超过 48 小时无回应，Telegram 官方群开启禁言或停更。</p>
+              </div>
+              <div class="signal-item warning">
+                <h4>3. 官网抽风但收银台顺畅</h4>
+                <p>后台管理页面打不开，但充值入口和套餐购买页面比谁都流畅。</p>
+              </div>
+              <div class="signal-item danger">
+                <h4>4. 旧用户断网，新用户依然能买</h4>
+                <p>已购买订阅无法使用，官网首页仍在疯狂放折扣大肆招揽新客。</p>
+              </div>
+            </div>
+
+            <div class="advice-box">
+              <h3>🛡️ 避坑防跑路指南（“三不”原则）</h3>
+              <ul>
+                <li><strong>坚持月付，保平安：</strong> 主力机场尽量按月付费或季付，切勿被“多年付折合超低价”诱惑，避开资金沉没风险。</li>
+                <li><strong>备用线路，不能少：</strong> 始终准备一个按流量计费（不限时）的备用机场，主力挂掉时随时保证网络通畅。</li>
+                <li><strong>选靠谱专线，看运营时长：</strong> 选择运营 2 年以上、具备物理 IEPL/IPLC 专线的头部品牌，如 <a href="sujie.html" target="_blank" style="color:var(--lime); text-decoration:underline;">速界 IEPL 专线</a> 或 <a href="guannt.html" target="_blank" style="color:var(--lime); text-decoration:underline;">光年梯专线</a>。</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="knowledge">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">Client Matrix & Documentation</p>
+            <h2>客户端知识中心：全平台代理工具全景矩阵（11 篇深度指引）</h2>
+            <p class="section-desc">涵盖 Windows、macOS、iOS (iPhone/iPad) 与 Android 等操作系统的代理客户端指南、规则订阅导入与故障诊断手册。</p>
+          </div>
+        </div>
+
+        <div class="knowledge-grid">
+          <!-- 文章 1: 客户端知识中心总览 -->
+          <article class="knowledge-card">
+            <div>
+              <div class="knowledge-top">
+                <span class="knowledge-platform-badge cross">全平台全景</span>
+                <span style="font-size: 11px; color: var(--muted);">核心总览</span>
+              </div>
+              <h3>多平台代理工具全景索引与选择指南</h3>
+              <p>从代理架构原理切入，对比 Clash、Xray、sing-box 核心异同，指导新手根据操作系统与订阅协议快速选对客户端。</p>
+              <div class="knowledge-tags">
+                <span class="knowledge-tag">客户端选型</span>
+                <span class="knowledge-tag">全平台矩阵</span>
+                <span class="knowledge-tag">小白必看</span>
+              </div>
+            </div>
+            <a href="https://jichangwiki.co/clients/" target="_blank" rel="noopener noreferrer" class="knowledge-link">查看全景指南 &rarr;</a>
+          </article>
+
+          <!-- 文章 2: Clash Verge Rev -->
+          <article class="knowledge-card">
+            <div>
+              <div class="knowledge-top">
+                <span class="knowledge-platform-badge win">Windows / macOS</span>
+                <span style="font-size: 11px; color: var(--muted);">首选推荐</span>
+              </div>
+              <h3>Clash Verge (Rev) 现代客户端全流程上手</h3>
+              <p>内置 Mihomo (Clash Meta) 内核，完美支持 TUN 虚拟网卡模式、脚本扩展扩展与规则集。适合电脑端主力使用。</p>
+              <div class="knowledge-tags">
+                <span class="knowledge-tag">Clash Verge</span>
+                <span class="knowledge-tag">Mihomo内核</span>
+                <span class="knowledge-tag">TUN模式</span>
+              </div>
+            </div>
+            <a href="https://jichangwiki.co/clients/clash-verge/" target="_blank" rel="noopener noreferrer" class="knowledge-link">查看配置教程 &rarr;</a>
+          </article>
+
+          <!-- 文章 3: Shadowrocket -->
+          <article class="knowledge-card">
+            <div>
+              <div class="knowledge-top">
+                <span class="knowledge-platform-badge ios">iOS (iPhone/iPad)</span>
+                <span style="font-size: 11px; color: var(--muted);">iOS 标配</span>
+              </div>
+              <h3>Shadowrocket (小火箭) 美区下载与订阅导入</h3>
+              <p>iOS 普及率最高的科学上网工具。支持二维码一键扫描导入、按需连接、分流规则配置与 UDP 转发设置。</p>
+              <div class="knowledge-tags">
+                <span class="knowledge-tag">Shadowrocket</span>
+                <span class="knowledge-tag">小火箭</span>
+                <span class="knowledge-tag">iOS代理</span>
+              </div>
+            </div>
+            <a href="https://jichangwiki.co/clients/shadowrocket/" target="_blank" rel="noopener noreferrer" class="knowledge-link">查看配置教程 &rarr;</a>
+          </article>
+
+          <!-- 文章 4: v2rayN -->
+          <article class="knowledge-card">
+            <div>
+              <div class="knowledge-top">
+                <span class="knowledge-platform-badge win">Windows</span>
+                <span style="font-size: 11px; color: var(--muted);">老牌全能</span>
+              </div>
+              <h3>v2rayN (Windows) 多内核配置与全协议指引</h3>
+              <p>经典老牌 Windows 工具，同时集成 Xray 与 sing-box 核心，支持直接测试节点真连接延迟、路由分流与自定义 DNS。</p>
+              <div class="knowledge-tags">
+                <span class="knowledge-tag">v2rayN</span>
+                <span class="knowledge-tag">Xray内核</span>
+                <span class="knowledge-tag">Win工具</span>
+              </div>
+            </div>
+            <a href="https://jichangwiki.co/clients/v2rayn/" target="_blank" rel="noopener noreferrer" class="knowledge-link">查看配置教程 &rarr;</a>
+          </article>
+
+          <!-- 文章 5: v2rayNG -->
+          <article class="knowledge-card">
+            <div>
+              <div class="knowledge-top">
+                <span class="knowledge-platform-badge android">Android (安卓)</span>
+                <span style="font-size: 11px; color: var(--muted);">安卓标配</span>
+              </div>
+              <h3>v2rayNG (Android) 开源客户端安装与使用</h3>
+              <p>安卓平台最稳定的开源代理工具，界面干净无广告，支持分应用代理设置（指定应用走代理或绕过）。</p>
+              <div class="knowledge-tags">
+                <span class="knowledge-tag">v2rayNG</span>
+                <span class="knowledge-tag">安卓客户端</span>
+                <span class="knowledge-tag">分应用代理</span>
+              </div>
+            </div>
+            <a href="https://jichangwiki.co/clients/v2rayng/" target="_blank" rel="noopener noreferrer" class="knowledge-link">查看配置教程 &rarr;</a>
+          </article>
+
+          <!-- 文章 6: sing-box -->
+          <article class="knowledge-card">
+            <div>
+              <div class="knowledge-top">
+                <span class="knowledge-platform-badge cross">跨平台通用</span>
+                <span style="font-size: 11px; color: var(--muted);">新一代核心</span>
+              </div>
+              <h3>sing-box 通用代理核心与跨平台 GUI 配置</h3>
+              <p>性能卓越的新一代通用通用代理工具，内存占用极低，原生支持 Hysteria 2、TUIC v5 以及 VLESS REALITY 协议。</p>
+              <div class="knowledge-tags">
+                <span class="knowledge-tag">sing-box</span>
+                <span class="knowledge-tag">通用核心</span>
+                <span class="knowledge-tag">高性能</span>
+              </div>
+            </div>
+            <a href="https://jichangwiki.co/clients/sing-box/" target="_blank" rel="noopener noreferrer" class="knowledge-link">查看配置教程 &rarr;</a>
+          </article>
+
+          <!-- 文章 7: Clash 核心体系 -->
+          <article class="knowledge-card">
+            <div>
+              <div class="knowledge-top">
+                <span class="knowledge-platform-badge cross">语法与进阶</span>
+                <span style="font-size: 11px; color: var(--muted);">技术原理</span>
+              </div>
+              <h3>Clash 配置文件结构与 YAML 语法进阶</h3>
+              <p>深度剖析 Clash 的 Proxy Groups 策略组逻辑、Rule 匹配先后顺序、TUN 虚拟网卡配置与防 DNS 污染污染技巧。</p>
+              <div class="knowledge-tags">
+                <span class="knowledge-tag">Clash原理</span>
+                <span class="knowledge-tag">YAML语法</span>
+                <span class="knowledge-tag">分流规则</span>
+              </div>
+            </div>
+            <a href="https://jichangwiki.co/clients/clash/" target="_blank" rel="noopener noreferrer" class="knowledge-link">查看进阶文档 &rarr;</a>
+          </article>
+
+          <!-- 文章 8: Stash -->
+          <article class="knowledge-card">
+            <div>
+              <div class="knowledge-top">
+                <span class="knowledge-platform-badge ios">iOS / macOS</span>
+                <span style="font-size: 11px; color: var(--muted);">苹果生态</span>
+              </div>
+              <h3>Stash (iOS/Mac) 基于 Clash 规则的高颜值客户端</h3>
+              <p>专为 Apple 生态打造，无缝兼容 Clash YAML 配置文件，支持按需连接（On-Demand）、 MitM 覆写与优雅面板。</p>
+              <div class="knowledge-tags">
+                <span class="knowledge-tag">Stash</span>
+                <span class="knowledge-tag">Clash兼容</span>
+                <span class="knowledge-tag">iOS/Mac</span>
+              </div>
+            </div>
+            <a href="https://jichangwiki.co/clients/stash/" target="_blank" rel="noopener noreferrer" class="knowledge-link">查看配置教程 &rarr;</a>
+          </article>
+
+          <!-- 文章 9: Surge -->
+          <article class="knowledge-card">
+            <div>
+              <div class="knowledge-top">
+                <span class="knowledge-platform-badge mac">macOS / iOS</span>
+                <span style="font-size: 11px; color: var(--muted);">专业神级</span>
+              </div>
+              <h3>Surge (macOS/iOS) 顶级抓包与网络调试神器</h3>
+              <p>Apple 平台上最强大的网络分析与代理工具。具备极致性能表现、网速监控面板、脚本重写与专业级 MitM 调试。</p>
+              <div class="knowledge-tags">
+                <span class="knowledge-tag">Surge</span>
+                <span class="knowledge-tag">网络抓包</span>
+                <span class="knowledge-tag">专业级代理</span>
+              </div>
+            </div>
+            <a href="https://jichangwiki.co/clients/surge/" target="_blank" rel="noopener noreferrer" class="knowledge-link">查看配置教程 &rarr;</a>
+          </article>
+
+          <!-- 文章 10: Quantumult X -->
+          <article class="knowledge-card">
+            <div>
+              <div class="knowledge-top">
+                <span class="knowledge-platform-badge ios">iOS (iPhone)</span>
+                <span style="font-size: 11px; color: var(--muted);">圈 X 神器</span>
+              </div>
+              <h3>Quantumult X (圈 X) 策略组与 JS 脚本编写</h3>
+              <p>设计极具现代感的 iOS 高级代理软件。支持强大的 JavaScript 动态脚本控制、网络重写与多维度策略分流。</p>
+              <div class="knowledge-tags">
+                <span class="knowledge-tag">Quantumult X</span>
+                <span class="knowledge-tag">圈X</span>
+                <span class="knowledge-tag">JS脚本</span>
+              </div>
+            </div>
+            <a href="https://jichangwiki.co/clients/quantumult-x/" target="_blank" rel="noopener noreferrer" class="knowledge-link">查看配置教程 &rarr;</a>
+          </article>
+
+          <!-- 文章 11: Hiddify & NekoBox -->
+          <article class="knowledge-card">
+            <div>
+              <div class="knowledge-top">
+                <span class="knowledge-platform-badge cross">多端极简</span>
+                <span style="font-size: 11px; color:var(--muted);">新锐推荐</span>
+              </div>
+              <h3>Hiddify & NekoBox 多平台极简客户端指南</h3>
+              <p>适合追求零门槛小白用户，支持全平台一致界面、自动下载与节点更新，无须复杂配置即可极速连通海外节点。</p>
+              <div class="knowledge-tags">
+                <span class="knowledge-tag">Hiddify</span>
+                <span class="knowledge-tag">NekoBox</span>
+                <span class="knowledge-tag">开箱即用</span>
+              </div>
+            </div>
+            <a href="https://jichangwiki.co/clients/hiddify/" target="_blank" rel="noopener noreferrer" class="knowledge-link">查看配置教程 &rarr;</a>
+          </article>
+        </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">About Us</p>
+            <h2>关于本站</h2>
+          </div>
+        </div>
+        <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px; padding: 28px; line-height: 1.8; color: var(--muted, #94a3b8); font-size: 15px;">
+          <p style="margin: 0;">
+            机场选（jichangxuan.net）致力于为全球用户提供客观、专业、全方位的科学上网与网络加速解决方案指南。本站立足于深度的节点实测与持续的网络监控，严格筛选具备端到端物理专线（IEPL/IPLC）、低延迟高可用性及优秀运营口碑的优质服务商。我们坚持以数据与真实体验为依据，定期梳理便宜好用机场推荐、稳定翻墙机场排行榜、全平台客户端配置教程及行业避坑预警，帮助用户避开跑路风险与虚假宣传，畅享极速、安全、无界的全球互联网连接体验。
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container footer-grid">
+      <div>
+        <span class="brand-name">机场选 <em>net</em></span>
+        <p style="margin-top:12px; color:rgba(255,255,255,.6);">专注高质量科学上网节点、IEPL专线机场评测与科学上网指南。所有推荐均经过实测校验。</p>
+      </div>
+      <div>
+        <p style="font-weight:800; margin-bottom:12px;">快速导航</p>
+        <p><a href="sujie.html" target="_blank">速界 IEPL 专线评测</a></p>
+        <p><a href="#recommend">优质机场排行榜</a></p>
+      </div>
+      <div>
+        <p style="font-weight:800; margin-bottom:12px;">版权信息</p>
+        <p>&copy; 2026 jichangxuan.net. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const headerMenu = document.getElementById('headerMenu');
+    const mainNav = document.getElementById('mainNav');
+    headerMenu.addEventListener('click', () => {
+      const open = mainNav.classList.toggle('open');
+      headerMenu.setAttribute('aria-expanded', String(open));
+      headerMenu.setAttribute('aria-label', open ? '关闭导航' : '打开导航');
+    });
+    mainNav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+      mainNav.classList.remove('open');
+      headerMenu.setAttribute('aria-expanded', 'false');
+    }));
+
+    document.querySelectorAll('.coupon-code-box').forEach(box => {
+      box.addEventListener('click', async () => {
+        const code = box.getAttribute('data-code');
+        const codeEl = box.querySelector('code');
+        const originalText = codeEl.textContent;
+        try {
+          await navigator.clipboard.writeText(code);
+          codeEl.textContent = '已复制!';
+          setTimeout(() => { codeEl.textContent = originalText; }, 1500);
+        } catch(e) {}
+      });
+    });
+
+    // FAQ 30问 页内实时搜索与导航
+    const faqSearchInput = document.getElementById('faqSearchInput');
+    if (faqSearchInput) {
+      faqSearchInput.addEventListener('input', (e) => {
+        const val = e.target.value.toLowerCase().trim();
+        const faqGroups = document.querySelectorAll('.faq-group');
+        faqGroups.forEach(group => {
+          let hasMatchInGroup = false;
+          const items = group.querySelectorAll('.faq-item-card');
+          items.forEach(item => {
+            const qText = item.querySelector('.faq-question').textContent.toLowerCase();
+            const aText = item.querySelector('.faq-answer').textContent.toLowerCase();
+            if (val === '' || qText.includes(val) || aText.includes(val)) {
+              item.style.display = 'block';
+              hasMatchInGroup = true;
+            } else {
+              item.style.display = 'none';
+            }
+          });
+          group.style.display = hasMatchInGroup ? 'block' : 'none';
+        });
+      });
+    }
+
+    function scrollToFaqGroup(groupId) {
+      document.querySelectorAll('.faq-tab-btn').forEach(btn => btn.classList.remove('active'));
+      if (event && event.target) event.target.classList.add('active');
+      
+      const faqGroups = document.querySelectorAll('.faq-group');
+      const items = document.querySelectorAll('.faq-item-card');
+      if (faqSearchInput) faqSearchInput.value = '';
+      items.forEach(i => i.style.display = 'block');
+      
+      if (groupId === 'all') {
+        faqGroups.forEach(g => g.style.display = 'block');
+      } else {
+        faqGroups.forEach(g => {
+          if (g.id === groupId) {
+            g.style.display = 'block';
+            g.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          } else {
+            g.style.display = 'block';
+          }
+        });
+      }
+    }
+  </script>
+
+</body>
+</html>
