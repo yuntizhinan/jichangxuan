@@ -1,0 +1,23 @@
+User-agent: *
+Allow: /
+
+# AI & Generative Engine Crawlers (GEO Optimization)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ByteSpider
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: https://jichangxuan.net/sitemap.xml
